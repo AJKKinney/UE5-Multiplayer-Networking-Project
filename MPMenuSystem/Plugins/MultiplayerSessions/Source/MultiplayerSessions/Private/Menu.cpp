@@ -7,10 +7,11 @@
 #include "OnlineSessionSettings.h"
 #include "OnlineSubsystem.h"
 
-void UMenu::MenuSetup(int32 NumPublicConnctions, FString TypeOfMatch)
+void UMenu::MenuSetup(int32 NumPublicConnctions, FString TypeOfMatch, FString LobbyPath)
 {
 	NumberOfPublicConnection = NumPublicConnctions;
 	MatchType = TypeOfMatch;
+	PathToLobby = FString::Printf(TEXT("%s?Listen"), *LobbyPath);
 	AddToViewport();
 	SetVisibility(ESlateVisibility::Visible);
 	bIsFocusable = true;
@@ -98,7 +99,7 @@ void UMenu::OnCreateSession(bool bWasSuccessful)
 		UWorld* World = GetWorld();
 		if (World)
 		{
-			World->ServerTravel("/Game/ThirdPerson/Maps/LobbyMap?Listen");
+			World->ServerTravel(PathToLobby);
 		}
 	}
 	else
