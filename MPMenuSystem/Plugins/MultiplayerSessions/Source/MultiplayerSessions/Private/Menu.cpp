@@ -113,6 +113,8 @@ void UMenu::OnCreateSession(bool bWasSuccessful)
 				FString(TEXT("Failed to Create Session"))
 			);
 		}
+
+		HostButton->SetIsEnabled(true);
 	}
 }
 
@@ -133,6 +135,11 @@ void UMenu::OnFindSessions(const TArray<FOnlineSessionSearchResult> SessionResul
 			MultiplayerSessionsSubsystem->JoinSession(Result);
 			return;
 		}
+	}
+
+	if (bWasSuccessful == false || SessionResults.Num() == 0)
+	{
+		JoinButton->SetIsEnabled(true);
 	}
 }
 
@@ -157,6 +164,11 @@ void UMenu::OnJoinSession(EOnJoinSessionCompleteResult::Type Result)
 				PlayerController->ClientTravel(Address, ETravelType::TRAVEL_Absolute);
 			}
 		}
+	}
+
+	if (Result != EOnJoinSessionCompleteResult::Success)
+	{
+		JoinButton->SetIsEnabled(true);
 	}
 }
 
@@ -193,6 +205,7 @@ void UMenu::HostButtonClicked()
 		);
 	}
 	*/
+	HostButton->SetIsEnabled(false);
 
 	if (MultiplayerSessionsSubsystem)
 	{
@@ -213,6 +226,8 @@ void UMenu::JoinButtonClicked()
 		);
 	}
 	*/
+
+	JoinButton->SetIsEnabled(false);
 
 	if (MultiplayerSessionsSubsystem)
 	{
