@@ -66,6 +66,11 @@ bool UMenu::Initialize()
 		JoinButton->OnClicked.AddDynamic(this, &ThisClass::JoinButtonClicked);
 	}
 
+	if (StartButton)
+	{
+		StartButton->OnClicked.AddDynamic(this, &ThisClass::StartButtonClicked);
+	}
+
 	return true;
 }
 
@@ -160,6 +165,18 @@ void UMenu::OnDestroySession(bool bWasSuccessful)
 
 void UMenu::OnStartSession(bool bWasSuccessful)
 {
+	if (bWasSuccessful)
+	{
+		if (GEngine)
+		{
+			GEngine->AddOnScreenDebugMessage(
+				-1,
+				15.f,
+				FColor::Yellow,
+				FString("Session started successfully")
+			);
+		}
+	}
 }
 
 void UMenu::HostButtonClicked()
@@ -199,6 +216,14 @@ void UMenu::JoinButtonClicked()
 	if (MultiplayerSessionsSubsystem)
 	{
 		MultiplayerSessionsSubsystem->FindSessions(10000);
+	}
+}
+
+void UMenu::StartButtonClicked()
+{
+	if (MultiplayerSessionsSubsystem)
+	{
+		MultiplayerSessionsSubsystem->StartSession();
 	}
 }
 

@@ -44,12 +44,18 @@ private:
 	class UButton* HostButton;
 	UPROPERTY(meta = (BindWidget))
 	UButton* JoinButton;
+	UPROPERTY(meta = (BindWidget))
+	UButton* StartButton;
 
+	
 	UFUNCTION()
 	void HostButtonClicked();
 
 	UFUNCTION()
 	void JoinButtonClicked();
+
+	UFUNCTION()
+	void StartButtonClicked();
 
 	void MenuTeardown();
 
